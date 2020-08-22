@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
-import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 
 import {
   Home,
@@ -57,24 +57,28 @@ function App() {
   // ]);
   // return element;
 
+  let navigate = useNavigate();
   let location = useLocation();
-  console.log(location);
+  useEffect(() => {
+    if (location.pathname === '/services') {
+      navigate('/about/services');
+    }
+  });
   return (
-    <Routes>
-      <Route path='/' element={<Home />} />
-      <Route path='/about' element={<About />}>
-        <Route path='services' element={<Services />} />
-        <Route path='history' element={<History />} />
-        <Route path='location' element={<Location />} />
-      </Route>
-      <Route path='/events' element={<Events />} />
-      <Route path='/products' element={<Products />} />
-      <Route path='/contact' element={<Contact />} />
-      {location.pathname === '/services' && (
-        <Navigate to='about/services' replace={true} />
-      )}
-      <Route path='*' element={<Whoops404 />} />
-    </Routes>
+    <div className='App'>
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/about' element={<About />}>
+          <Route path='services' element={<Services />} />
+          <Route path='history' element={<History />} />
+          <Route path='location' element={<Location />} />
+        </Route>
+        <Route path='/events' element={<Events />} />
+        <Route path='/products' element={<Products />} />
+        <Route path='/contact' element={<Contact />} />
+        <Route path='*' element={<Whoops404 />} />
+      </Routes>
+    </div>
   );
 }
 
